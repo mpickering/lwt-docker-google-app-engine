@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+env $(cat config | xargs) envsubst -i app.yaml.template > app.yaml
+source config
+gcloud app deploy app.yaml -v v1 --project=$LWT_PROJECT

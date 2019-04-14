@@ -1,21 +1,26 @@
-# LWT Docker
+# Deploy LWT to Google App Engine
 
-This project builds [Learning With Texts](http://lwt.sf.net) for
-[Docker](https://www.docker.com/). It's based on the image from
-[brianhicks](https://github.com/brianhicks/lwt-docker), and
-the fork from [phrom](https://github.com/phrom/lwt-docker).
+These scripts provide the simplest way to deploy your own personal
+[Learning With Texts](http://lwt.sf.net) instance to Google App Engine so you can access your texts
+anywhere.
 
 ## Usage
 
-Running:
+Firstly modify `config.example` and save it was `config`.
 
-    docker-compose up
+* `LWT_PROJECT` is the name you want to access your instance on.
+* `LWT_USERNAME` is the username you want to use to login
+* `LWT_PASSWORD` is the password you want to use to login
+* `LWT_MYSQL_PASSWORD` is the password you want to root user of the MySQL database to have.
+* `GCLOUD_BILLING_ACCOUNT` is the billing account ID you want to link the project to. You can find this out by running `gcloud beta billing accounts list`
 
-Should start MySQL and LWT. By default it should be mapped to port `8000`, so you'll access LWT at <http://localhost:8000/lwt/>.
+Make sure that `gcloud` and `envsubst` are on your `PATH`.
 
-## Notes
+Then run `./init` to initialise the project, cloud SQL database and deploy
+the application. That's it!
 
-- The timezone defaults `America/New_York`. To change it, pass
-  [a valid PHP timezone string](http://php.net/manual/en/timezones.php)
-  as a `timezone` [build arg](https://docs.docker.com/compose/compose-file/#args)
-  in the `lwt` service definition in `docker-compose.yml`.
+If you make any changes to the application and want to redeploy you can use
+the `./deploy` script.
+
+Once the script finishes running you can access your instance on `$LWT_PROJECT.appspot.com/lwt/`.
+For example, if I had called the project `matts-french-lwt` then the URL would be `matts-french-lwt.appspot.com/lwt/`.

@@ -14,7 +14,7 @@ services:
     depends_on:
       - "lwt-mysql"
     ports:
-      - "8000:80"
+      - "8080:8080"
 
   lwt-mysql:
     container_name: "lwt-mysql"

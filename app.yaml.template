@@ -1,0 +1,16 @@
+runtime: custom
+env: flex
+
+resources:
+  cpu: 1
+  memory_gb: 2
+  disk_size_gb: 10
+
+env_variables:
+  MYSQL_ENV_MYSQL_USER: "root"
+  MYSQL_ENV_MYSQL_PASSWORD: "$LWT_MYSQL_PASSWORD"
+  MYSQL_ENV_MYSQL_DATABASE: "lwt"
+  MYSQL_PORT_3306_TCP_ADDR: "cloudsql"
+
+beta_settings:
+  cloud_sql_instances: "$LWT_PROJECT:europe-west1:lwt-database=tcp:3306"

@@ -1,0 +1,11 @@
+#! /usr/bin/env bash
+
+set -e
+source config
+gcloud projects create $LWT_PROJECT
+gcloud sql instances create lwt-database --tier=db-f1-micro --region=europe-west1 --project $LWT_PROJECT || echo "Waiting 5 minutes for the command to finish"; sleep 5m
+gcloud sql users set-password root --instance lwt-database --host=% --password $LWT_MYSQL_PASSWORD --project $LWT_PROJECT
+gcloud services enable sqladmin.googleapis.com --project=$LWT_PROJECT
+gcloud app create --region=europe-west1 --project=$LWT_PROJECT
+gcloud beta billing projects link $LWT_PROJECT --billing-account $GCLOUD_BILLING_ACCOUNT
+./deploy
